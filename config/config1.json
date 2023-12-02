@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sw_crm",
+    "password": "V9JnQHoafQD3",
+    "database": "db_crm",
+    "host": "solarworks-crm-data.cyavz0dflrzt.eu-central-1.rds.amazonaws.com",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "sw_crm",
+    "password": "V9JnQHoafQD3",
+    "database": "db_crm",
+    "host": "solarworks-crm-data.cyavz0dflrzt.eu-central-1.rds.amazonaws.com",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "sw_crm",
+    "password": "V9JnQHoafQD3",
+    "database": "db_crm",
+    "host": "solarworks-crm-data.cyavz0dflrzt.eu-central-1.rds.amazonaws.com",
+    "dialect": "postgres"
+  }
+}

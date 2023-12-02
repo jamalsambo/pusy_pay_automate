@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sw_angaza",
+    "password": "=]2LH9n6=t",
+    "database": "angaza",
+    "host": "solarworks-angaza-warehouse.cyavz0dflrzt.eu-central-1.rds.amazonaws.com",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "sw_angaza",
+    "password": "=]2LH9n6=t",
+    "database": "angaza",
+    "host": "solarworks-angaza-warehouse.cyavz0dflrzt.eu-central-1.rds.amazonaws.com",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "sw_angaza",
+    "password": "=]2LH9n6=t",
+    "database": "angaza",
+    "host": "solarworks-angaza-warehouse.cyavz0dflrzt.eu-central-1.rds.amazonaws.com",
+    "dialect": "postgres"
+  }
+}
