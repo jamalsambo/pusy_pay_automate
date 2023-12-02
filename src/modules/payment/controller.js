@@ -9,7 +9,7 @@ const mozambiqueTimeZone = 'Africa/Maputo';
 const cron = require('node-cron');
 
 // Agendamento para executar a tarefa todos os dias às 12:00
-cron.schedule('0 14 * * *', async () => {
+cron.schedule('0 16 * * *', async () => {
     const uuid = uuidv4();
     var qid = null;
     const nowInMozambique = moment.tz(mozambiqueTimeZone).format('YYYY-MM-DD HH:mm:ss');
