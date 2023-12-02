@@ -69,10 +69,3 @@ cron.schedule('0 16 * * *', async () => {
         console.log(error)
     }
 });
-
-
-// module.exports = {
-//     create: async (req, res) => {
-       
-//     }
-// }
