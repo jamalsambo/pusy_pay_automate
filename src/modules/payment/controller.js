@@ -27,47 +27,43 @@ cron.schedule('0 16 * * *', async () => {
             const padrao = /^(\+25885|\+25884)/;
 
             if (padrao.test(msisdn)) {
-                console.log("O número começa com +25885 ou +25884. "+msisdn);
-            }
+                const exec = await create(amount, msisdn, angaza_id);
 
-            // const exec = await create(amount, msisdn, angaza_id);
-
-            // const data = {
-            //     angaza_id: angaza_id,
-            //     third_party_reference: exec.output_ThirdPartyReference,
-            //     amount: amount,
-            //     response_code: exec.output_ResponseCode,
-            //     account_number: account_number,
-            //     customer_name: customer_name,
-            //     country: 'MZ',
-            //     transaction_id: exec.output_TransactionID,
-            //     msisdn: msisdn,
-            //     payment_description: 'Mensalidade',
-            //     createBy: 'System',
-            //     createdAt: nowInMozambique,
-            //     response_desc: exec.output_ResponseDesc
-            // };
-
-            // if (exec.output_ResponseCode == 'INS-0') {
-            //     const dataToAngaza = {
-            //         amount: amount,
-            //         msisdn: msisdn,
-            //         account_qid: angaza_id,
-            //         external_xref: exec.output_TransactionID
-            //     }
-
-            //     const paygAngaza = await api(`payments/${uuid}`, dataToAngaza, "PUT");
-            //     if (paygAngaza.qid) {
-            //         qid = paygAngaza.qid;
-            //         await register(data, qid)
-            //     } else {
-            //         await register(data, qid)
-            //     }
-
-            // } else {
-            //     await register(data, qid)
-            // }
-
+                const data = {
+                    angaza_id: angaza_id,
+                    third_party_reference: exec.output_ThirdPartyReference,
+                    amount: amount,
+                    response_code: exec.output_ResponseCode,
+                    account_number: account_number,
+                    customer_name: customer_name,
+                    country: 'MZ',
+                    transaction_id: exec.output_TransactionID,
+                    msisdn: msisdn,
+                    payment_description: 'Mensalidade',
+                    createBy: 'System',
+                    createdAt: nowInMozambique,
+                    response_desc: exec.output_ResponseDesc
+                };
+    
+                if (exec.output_ResponseCode == 'INS-0') {
+                    const dataToAngaza = {
+                        amount: amount,
+                        msisdn: msisdn,
+                        account_qid: angaza_id,
+                        external_xref: exec.output_TransactionID
+                    }
+    
+                    const paygAngaza = await api(`payments/${uuid}`, dataToAngaza, "PUT");
+                    if (paygAngaza.qid) {
+                        qid = paygAngaza.qid;
+                        await register(data, qid)
+                    } else {
+                        await register(data, qid)
+                    }
+                } else {
+                    await register(data, qid)
+                }
+            } 
         }
     } catch (error) {
         console.log(error)
