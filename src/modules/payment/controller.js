@@ -29,6 +29,7 @@ cron.schedule('0 16 * * *', async () => {
             if (padrao.test(msisdn)) {
                 const exec = await create(amount, msisdn, angaza_id);
 
+                
                 const data = {
                     angaza_id: angaza_id,
                     third_party_reference: exec.output_ThirdPartyReference,
