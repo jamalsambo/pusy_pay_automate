@@ -20,6 +20,7 @@ exports.accounts = async () => {
                     },
                 },
             ]
-        }
+        },
+        limit: 10
     });
 }

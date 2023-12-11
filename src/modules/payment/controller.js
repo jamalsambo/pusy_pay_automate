@@ -9,27 +9,38 @@ const mozambiqueTimeZone = 'Africa/Maputo';
 const cron = require('node-cron');
 
 // Agendamento para executar a tarefa todos os dias às 12:00
-cron.schedule('0 16 * * *', async () => {
+cron.schedule('30 16 * * *', async () => {
     const uuid = uuidv4();
     var qid = null;
     const nowInMozambique = moment.tz(mozambiqueTimeZone).format('YYYY-MM-DD HH:mm:ss');
 
     try {
         const acc = await accounts();
-        for (const e of acc) {
-            const monthlyPayment = (e.hour_price * 24) * 30;
-            const amount = Number(monthlyPayment.toFixed(0));
-            const angaza_id = e.angaza_id;
-            const msisdn = e.owner_msisdn;
-            const account_number = e.account_number;
-            const customer_name = e.owner_name
-            // Verificar se o número começa com +25885 ou +25884
+
+        function* reader() {
+            for (let i = 0; i < acc.length; i++) {
+                yield acc[i]
+            }
+        }
+
+        const iterator = reader();
+
+        let line = iterator.next();
+
+
+        // processing
+        while (!line.done) {
             const padrao = /^(\+25885|\+25884)/;
+            const monthlyPayment = (line.value.hour_price * 24) * 30;
+            const amount = Number(monthlyPayment.toFixed(0));
+            const angaza_id = line.value.angaza_id;
+            const msisdn = line.value.owner_msisdn;
+            const account_number = line.value.account_number;
+            const customer_name = line.value.owner_name;
 
             if (padrao.test(msisdn)) {
                 const exec = await create(amount, msisdn, angaza_id);
 
-                
                 const data = {
                     angaza_id: angaza_id,
                     third_party_reference: exec.output_ThirdPartyReference,
@@ -64,8 +75,11 @@ cron.schedule('0 16 * * *', async () => {
                 } else {
                     await register(data, qid)
                 }
-            } 
+            }
+
+            line = iterator.next();
         }
+
     } catch (error) {
         console.log(error)
     }
