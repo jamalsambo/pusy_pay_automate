@@ -38,7 +38,8 @@ cron.schedule('30 16 * * *', async () => {
             const account_number = line.value.account_number;
             const customer_name = line.value.owner_name;
 
-            if (padrao.test(msisdn)) {
+            if (padrao.exec(msisdn)) {
+
                 const exec = await create(amount, msisdn, angaza_id);
 
                 const data = {
@@ -56,7 +57,7 @@ cron.schedule('30 16 * * *', async () => {
                     createdAt: nowInMozambique,
                     response_desc: exec.output_ResponseDesc
                 };
-    
+
                 if (exec.output_ResponseCode == 'INS-0') {
                     const dataToAngaza = {
                         amount: amount,
@@ -64,7 +65,7 @@ cron.schedule('30 16 * * *', async () => {
                         account_qid: angaza_id,
                         external_xref: exec.output_TransactionID
                     }
-    
+
                     const paygAngaza = await api(`payments/${uuid}`, dataToAngaza, "PUT");
                     if (paygAngaza.qid) {
                         qid = paygAngaza.qid;
@@ -75,6 +76,8 @@ cron.schedule('30 16 * * *', async () => {
                 } else {
                     await register(data, qid)
                 }
+
+
             }
 
             line = iterator.next();
